@@ -1,6 +1,6 @@
 package MooseX::Types::Perl;
-BEGIN {
-  $MooseX::Types::Perl::VERSION = '0.101340';
+{
+  $MooseX::Types::Perl::VERSION = '0.101341';
 }
 # ABSTRACT: Moose types that check against Perl syntax
 use MooseX::Types -declare => [ qw(
@@ -23,13 +23,17 @@ use Params::Util qw(_CLASS);
 use version 0.82;
 
 
-subtype ModuleName,  as Str, where { _CLASS($_) };
-subtype PackageName, as Str, where { _CLASS($_) };
+subtype ModuleName,  as Str, where { ! /\P{ASCII}/ && _CLASS($_) };
+subtype PackageName, as Str, where { ! /\P{ASCII}/ && _CLASS($_) };
 
 
 subtype DistName,
   as Str,
-  where   { return if /:/; (my $str = $_) =~ s/-/::/g; _CLASS($str) },
+  where   {
+    return if /:/;
+    (my $str = $_) =~ s/-/::/g;
+    $str !~ /\P{ASCII}/ && _CLASS($str)
+  },
   message {
     /::/
     ? "$_ looks like a module name, not a dist name"
@@ -79,7 +83,7 @@ MooseX::Types::Perl - Moose types that check against Perl syntax
 
 =head1 VERSION
 
-version 0.101340
+version 0.101341
 
 =head1 SYNOPSIS
 
@@ -157,11 +161,11 @@ object.  Coercions from LaxVersionStr (and thus StrictVersionStr) are provided.
 
 =head1 AUTHOR
 
-  Ricardo SIGNES <rjbs@cpan.org>
+Ricardo SIGNES <rjbs@cpan.org>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2010 by Ricardo SIGNES.
+This software is copyright (c) 2011 by Ricardo SIGNES.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
