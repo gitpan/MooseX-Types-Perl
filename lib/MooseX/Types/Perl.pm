@@ -1,6 +1,6 @@
 package MooseX::Types::Perl;
 {
-  $MooseX::Types::Perl::VERSION = '0.101341';
+  $MooseX::Types::Perl::VERSION = '0.101342';
 }
 # ABSTRACT: Moose types that check against Perl syntax
 use MooseX::Types -declare => [ qw(
@@ -75,6 +75,7 @@ coerce VersionObject,
 1;
 
 __END__
+
 =pod
 
 =head1 NAME
@@ -83,7 +84,7 @@ MooseX::Types::Perl - Moose types that check against Perl syntax
 
 =head1 VERSION
 
-version 0.101341
+version 0.101342
 
 =head1 SYNOPSIS
 
@@ -165,10 +166,9 @@ Ricardo SIGNES <rjbs@cpan.org>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2011 by Ricardo SIGNES.
+This software is copyright (c) 2013 by Ricardo SIGNES.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
 
 =cut
-
